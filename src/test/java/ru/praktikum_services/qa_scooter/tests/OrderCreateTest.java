@@ -18,18 +18,20 @@ import static org.hamcrest.Matchers.*;
 public class OrderCreateTest {
 
     private final String[] colors;
+    private final String testCaseDescription;
 
-    public OrderCreateTest(String[] colors) {
+    public OrderCreateTest(String testCaseDescription, String[] colors) {
+        this.testCaseDescription = testCaseDescription;
         this.colors = colors;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][]{
-                {new String[]{"BLACK"}},
-                {new String[]{"GREY"}},
-                {new String[]{"BLACK", "GREY"}},
-                {new String[]{}},
+                {"Создание заказа с одним цветом BLACK", new String[]{"BLACK"}},
+                {"Создание заказа с одним цветом GREY", new String[]{"GREY"}},
+                {"Создание заказа с двумя цветами (BLACK и GREY)", new String[]{"BLACK", "GREY"}},
+                {"Создание заказа без указания цвета", new String[]{}}
         });
     }
 
@@ -51,12 +53,13 @@ public class OrderCreateTest {
         order.put("deliveryDate", "2025-06-09");
         order.put("comment", "bebeb");
         order.put("color", colors);
-
         Response response = given()
                 .contentType(ContentType.JSON)
                 .body(order)
                 .post("/api/v1/orders");
 
-        response.then().statusCode(201).body("track", notNullValue());
+        response.then().
+                statusCode(201)
+                .body("track", notNullValue());
     }
 }
