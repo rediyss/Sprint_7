@@ -56,7 +56,7 @@ public class CourierLoginTest {
     }
 
     @Test
-    @DisplayName("Для авторизации нужны все обязательные поля")
+    @DisplayName("Авторизация только с паролем")
     public void loginRequiresAllFields() {
         // Без логина
         LoginCourier withoutLogin = new LoginCourier("1234", null);
@@ -64,7 +64,10 @@ public class CourierLoginTest {
                 .then()
                 .statusCode(400)
                 .body("message", equalTo("Недостаточно данных для входа"));
-
+    }
+        @Test
+        @DisplayName("Авторизация без пароля")
+        public void passRequiresAllFields() {
         // Без пароля
         LoginCourier withoutPassword = new LoginCourier(null, "Artas9r");
         loginCourier(withoutPassword)
@@ -74,15 +77,18 @@ public class CourierLoginTest {
     }
 
     @Test
-    @DisplayName("Неверный логин или пароль возвращает ошибку")
-    public void wrongLoginOrPasswordReturnsError() {
+    @DisplayName("Неверный логин возвращает ошибку")
+    public void wrongLoginReturnsError() {
         // Неверный логин
         LoginCourier wrongLogin = new LoginCourier("1234", "WrongLogin");
         loginCourier(wrongLogin)
                 .then()
                 .statusCode(404)
                 .body("message", equalTo("Учетная запись не найдена"));
-
+    }
+        @Test
+        @DisplayName("Неверный пароль возвращает ошибку")
+        public void wrongPasswordReturnsError() {
         // Неверный пароль
         LoginCourier wrongPassword = new LoginCourier("wrongpass", "Artas9r");
         loginCourier(wrongPassword)
