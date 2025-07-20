@@ -3,8 +3,10 @@ package ru.praktikum_services.qa_scooter.tests;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +16,14 @@ import static org.hamcrest.Matchers.*;
 
 public class CourierCreateTest {
 
+    protected RequestSpecification requestSpec;
     private String courierId;
 
     @Before
     public void setup() {
-        RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
+        requestSpec = new RequestSpecBuilder()
+                .setBaseUri("https://qa-scooter.praktikum-services.ru")
+                .build();
     }
 
     @After
@@ -72,6 +77,7 @@ public class CourierCreateTest {
     @Step("Создание курьера")
     private Response createCourier(Createuser courier) {
         return given()
+                .spec(requestSpec)
                 .contentType(ContentType.JSON)
                 .body(courier)
                 .post("/api/v1/courier");
@@ -80,6 +86,7 @@ public class CourierCreateTest {
     @Step("Получение ID курьера")
     private String getCourierId(String login, String password) {
         Response response = given()
+                .spec(requestSpec)
                 .contentType(ContentType.JSON)
                 .body(new Createuser(login, password, null))
                 .post("/api/v1/courier/login");
@@ -90,6 +97,7 @@ public class CourierCreateTest {
     @Step("Удаление курьера")
     private void deleteCourier(String id) {
         given()
+                .spec(requestSpec)
                 .contentType(ContentType.JSON)
                 .body("{\"id\": \"" + id + "\"}")
                 .when()
