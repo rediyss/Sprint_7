@@ -40,7 +40,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Можно создать курьера")
     @Description("Проверка успешного создания нового курьера с валидными логином, паролем и именем")
-    public void canCreateCourier() {
+    public void canCreateCourierTest() {
         CreateUser courier = new CreateUser("Artas12345991", "1234", "Rediys");
         lastCreatedCourier = courier;
 
@@ -51,7 +51,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     @Description("Проверка невозможности создания двух курьеров с одинаковыми данными. Ожидается 409 Conflict.")
-    public void cannotCreateDuplicateCourier() {
+    public void cannotCreateDuplicateCourierTest() {
         CreateUser courier = new CreateUser("Artas12345991", "1234", "Rediyss");
         lastCreatedCourier = courier;
 
@@ -65,7 +65,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без логина")
     @Description("Проверка ошибки при попытке создать курьера без логина. Ожидается код 400 и сообщение об ошибке.")
-    public void cannotCreateCourierWithoutLogin() {
+    public void cannotCreateCourierWithoutLoginTest() {
         CreateUser courier = new CreateUser();
         courier.setPassword("1234");
         courier.setFirstName("Rediyss");
@@ -76,7 +76,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без пароля")
     @Description("Проверка ошибки при попытке создать курьера без пароля. Ожидается код 400 и сообщение об ошибке.")
-    public void cannotCreateCourierWithoutPassword() {
+    public void cannotCreateCourierWithoutPasswordTest() {
         CreateUser courier = new CreateUser();
         courier.setLogin("noPassLogin123");
         courier.setFirstName("Rediyss");
@@ -87,7 +87,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без firstName")
     @Description("Проверка возможности создания курьера без поля firstName. Ожидается успешный ответ 201.")
-    public void canCreateCourierWithoutFirstName() {
+    public void canCreateCourierWithoutFirstNameTest() {
         CreateUser courier = new CreateUser("noFirstNameLogin123", "1234", null);
         lastCreatedCourier = courier;
 
