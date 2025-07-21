@@ -84,7 +84,6 @@ public class CourierLoginTest {
     @DisplayName("Неверный логин возвращает ошибку")
     @Description("Проверка, что при попытке авторизации с неверным логином возвращается код 404 и сообщение об ошибке.")
     public void wrongLoginReturnsErrorTest() {
-        // Неверный логин
         LoginCourier wrongLogin = new LoginCourier("1234", "WrongLogin");
         loginCourier(wrongLogin)
                 .then()
@@ -95,7 +94,6 @@ public class CourierLoginTest {
         @DisplayName("Неверный пароль возвращает ошибку")
         @Description("Проверка, что при авторизации с неверным паролем возвращается код 404 и сообщение об ошибке.")
         public void wrongPasswordReturnsErrorTest() {
-        // Неверный пароль
         LoginCourier wrongPassword = new LoginCourier("wrongpass", "Artas9r");
         loginCourier(wrongPassword)
                 .then()

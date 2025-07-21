@@ -11,9 +11,9 @@ import org.junit.runners.Parameterized;
 import java.util.*;
 import static org.hamcrest.Matchers.*;
 
+
 @RunWith(Parameterized.class)
 public class OrderCreateTest {
-
     private final String[] colors;
     private final String name;
     private OrderClient orderClient; // ← добавлено
@@ -21,7 +21,6 @@ public class OrderCreateTest {
     public OrderCreateTest(String name, String[] colors) {
         this.name = name;
         this.colors = colors;
-
     }
 
     @Parameterized.Parameters(name = "{0}")
@@ -37,7 +36,7 @@ public class OrderCreateTest {
     @Before
     public void setup() {
         RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
-        orderClient = new OrderClient(); // ← добавлено
+        orderClient = new OrderClient();
     }
 
     @Test

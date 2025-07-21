@@ -10,9 +10,9 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+
 
 public class CourierCreateTest {
 
@@ -73,6 +73,7 @@ public class CourierCreateTest {
         Response response = createCourier(courier);
         response.then().statusCode(400).body("message", not(empty()));
     }
+
     @Test
     @DisplayName("Создание курьера без пароля")
     @Description("Проверка ошибки при попытке создать курьера без пароля. Ожидается код 400 и сообщение об ошибке.")
@@ -84,6 +85,7 @@ public class CourierCreateTest {
         Response response = createCourier(courier);
         response.then().statusCode(400).body("message", not(empty()));
     }
+
     @Test
     @DisplayName("Создание курьера без firstName")
     @Description("Проверка возможности создания курьера без поля firstName. Ожидается успешный ответ 201.")
