@@ -1,5 +1,6 @@
 package ru.praktikum_services.qa_scooter.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -41,7 +42,8 @@ public class OrderCreateTest {
 
     @Test
     @DisplayName("Создание заказа с параметрами цвета")
-    public void createOrderWithColors() {
+    @Description("Проверка возможности создания заказа с определенными параметрами")
+    public void createOrderWithColorsTest() {
         Order order = new Order(
                 "Kek",
                 "Lol",

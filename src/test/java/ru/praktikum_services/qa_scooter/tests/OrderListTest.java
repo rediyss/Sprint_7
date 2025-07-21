@@ -1,5 +1,6 @@
 package ru.praktikum_services.qa_scooter.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import org.junit.BeforeClass;
@@ -17,7 +18,8 @@ public class OrderListTest {
 
     @Test
     @DisplayName("Список заказов не пустой")
-    public void orderListIsNotEmpty() {
+    @Description("Проверка, что при GET-запросе к /api/v1/orders возвращается список заказов и он не пустой")
+    public void orderListIsNotEmptyTest() {
         given()
                 .get("/api/v1/orders")
                 .then()

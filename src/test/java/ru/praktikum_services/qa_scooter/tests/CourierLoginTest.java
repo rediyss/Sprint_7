@@ -1,5 +1,6 @@
 package ru.praktikum_services.qa_scooter.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
@@ -44,7 +45,8 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Курьер может авторизоваться")
-    public void courierCanLogin() {
+    @Description("Проверка, что курьер может авторизоваться с валидными логином и паролем")
+    public void courierCanLoginTest() {
         LoginCourier loginData = new LoginCourier("1234", "Artas9r");
 
         Response loginResponse = loginCourier(loginData);
@@ -57,7 +59,8 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Авторизация только с паролем")
-    public void loginRequiresAllFields() {
+    @Description("Проверка, что авторизация без логина невозможна. Ожидается код 400 и сообщение об ошибке.")
+    public void loginRequiresAllFieldsTest() {
         // Без логина
         LoginCourier withoutLogin = new LoginCourier("1234", null);
         loginCourier(withoutLogin)
@@ -67,7 +70,8 @@ public class CourierLoginTest {
     }
         @Test
         @DisplayName("Авторизация без пароля")
-        public void passRequiresAllFields() {
+        @Description("Проверка, что авторизация без пароля невозможна. Ожидается код 400 и сообщение об ошибке.")
+        public void passRequiresAllFieldsTest() {
         // Без пароля
         LoginCourier withoutPassword = new LoginCourier(null, "Artas9r");
         loginCourier(withoutPassword)
@@ -78,7 +82,8 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Неверный логин возвращает ошибку")
-    public void wrongLoginReturnsError() {
+    @Description("Проверка, что при попытке авторизации с неверным логином возвращается код 404 и сообщение об ошибке.")
+    public void wrongLoginReturnsErrorTest() {
         // Неверный логин
         LoginCourier wrongLogin = new LoginCourier("1234", "WrongLogin");
         loginCourier(wrongLogin)
@@ -88,7 +93,8 @@ public class CourierLoginTest {
     }
         @Test
         @DisplayName("Неверный пароль возвращает ошибку")
-        public void wrongPasswordReturnsError() {
+        @Description("Проверка, что при авторизации с неверным паролем возвращается код 404 и сообщение об ошибке.")
+        public void wrongPasswordReturnsErrorTest() {
         // Неверный пароль
         LoginCourier wrongPassword = new LoginCourier("wrongpass", "Artas9r");
         loginCourier(wrongPassword)
@@ -99,7 +105,8 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Авторизация несуществующего пользователя возвращает ошибку")
-    public void nonExistentUserLoginFails() {
+    @Description("Проверка, что попытка авторизации несуществующего пользователя возвращает 404 и сообщение об ошибке.")
+    public void nonExistentUserLoginFailsTest() {
         LoginCourier nonExistent = new LoginCourier("wrongpass", "nonexistentuser");
         loginCourier(nonExistent)
                 .then()
@@ -109,7 +116,8 @@ public class CourierLoginTest {
 
     @Test
     @DisplayName("Успешная авторизация возвращает id курьера")
-    public void successfulLoginReturnsId() {
+    @Description("Проверка, что успешная авторизация возвращает непустой id в теле ответа")
+    public void successfulLoginReturnsIdTest() {
         LoginCourier loginData = new LoginCourier("1234", "Artas9r");
 
         Response loginResponse = loginCourier(loginData);
