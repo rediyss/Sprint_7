@@ -17,7 +17,7 @@ public class CourierCreateTest {
 
     protected RequestSpecification requestSpec;
     private String courierId;
-    private Createuser lastCreatedCourier;
+    private CreateUser lastCreatedCourier;
 
     @Before
     public void setup() {
@@ -39,7 +39,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Можно создать курьера")
     public void canCreateCourier() {
-        Createuser courier = new Createuser("Artas12345991", "1234", "Rediys");
+        CreateUser courier = new CreateUser("Artas12345991", "1234", "Rediys");
         lastCreatedCourier = courier;
 
         Response createResponse = createCourier(courier);
@@ -49,7 +49,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void cannotCreateDuplicateCourier() {
-        Createuser courier = new Createuser("Artas12345991", "1234", "Rediyss");
+        CreateUser courier = new CreateUser("Artas12345991", "1234", "Rediyss");
         lastCreatedCourier = courier;
 
         Response first = createCourier(courier);
@@ -62,7 +62,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без логина")
     public void cannotCreateCourierWithoutLogin() {
-        Createuser courier = new Createuser();
+        CreateUser courier = new CreateUser();
         courier.setPassword("1234");
         courier.setFirstName("Rediyss");
 
@@ -72,7 +72,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без пароля")
     public void cannotCreateCourierWithoutPassword() {
-        Createuser courier = new Createuser();
+        CreateUser courier = new CreateUser();
         courier.setLogin("noPassLogin123");
         courier.setFirstName("Rediyss");
 
@@ -82,7 +82,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Создание курьера без firstName")
     public void canCreateCourierWithoutFirstName() {
-        Createuser courier = new Createuser("noFirstNameLogin123", "1234", null);
+        CreateUser courier = new CreateUser("noFirstNameLogin123", "1234", null);
         lastCreatedCourier = courier;
 
         Response response = createCourier(courier);
@@ -90,7 +90,7 @@ public class CourierCreateTest {
     }
 
     @Step("Создание курьера")
-    private Response createCourier(Createuser courier) {
+    private Response createCourier(CreateUser courier) {
         return given()
                 .spec(requestSpec)
                 .contentType(ContentType.JSON)
@@ -103,7 +103,7 @@ public class CourierCreateTest {
         Response response = given()
                 .spec(requestSpec)
                 .contentType(ContentType.JSON)
-                .body(new Createuser(login, password, null))
+                .body(new CreateUser(login, password, null))
                 .post("/api/v1/courier/login");
 
         return response.jsonPath().getString("id");

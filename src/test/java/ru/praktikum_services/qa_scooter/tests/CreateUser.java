@@ -1,17 +1,17 @@
 package ru.praktikum_services.qa_scooter.tests;
 
-public class Createuser {
+public class CreateUser {
     private String password;
     private String firstName;
     private String login;
 
-    public Createuser(String login, String password, String firstName) {
+    public CreateUser(String login, String password, String firstName) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
     }
     //Пустой конструктор
-    public Createuser(){
+    public CreateUser(){
     }
 
 
