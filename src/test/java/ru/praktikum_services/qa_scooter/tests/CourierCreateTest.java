@@ -18,6 +18,7 @@ public class CourierCreateTest {
 
     protected RequestSpecification requestSpec;
     private String courierId;
+    private Createuser lastCreatedCourier;
 
     @Before
     public void setup() {
@@ -28,6 +29,9 @@ public class CourierCreateTest {
 
     @After
     public void tearDown() {
+        if (courierId == null && lastCreatedCourier != null) {
+            courierId = getCourierId(lastCreatedCourier.getLogin(), lastCreatedCourier.getPassword());
+        }
         if (courierId != null) {
             deleteCourier(courierId);
         }
@@ -37,29 +41,23 @@ public class CourierCreateTest {
     @DisplayName("Можно создать курьера")
     public void canCreateCourier() {
         Createuser courier = new Createuser("Artas12345991", "1234", "Rediys");
+        lastCreatedCourier = courier;
 
         Response createResponse = createCourier(courier);
         createResponse.then().statusCode(201).body("ok", is(true));
-
-        // Получаем ID для удаления
-        courierId = getCourierId(courier.getLogin(), courier.getPassword());
     }
 
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void cannotCreateDuplicateCourier() {
         Createuser courier = new Createuser("Artas12345991", "1234", "Rediyss");
+        lastCreatedCourier = courier;
 
         Response first = createCourier(courier);
         first.then().statusCode(anyOf(is(201), is(409)));
 
         Response second = createCourier(courier);
         second.then().statusCode(409).body("message", containsString("Этот логин уже используется"));
-
-
-        if (first.statusCode() == 201) {
-            courierId = getCourierId(courier.getLogin(), courier.getPassword());
-        }
     }
 
     @Test
@@ -71,7 +69,6 @@ public class CourierCreateTest {
 
         Response response = createCourier(courier);
         response.then().statusCode(400).body("message", not(empty()));
-        // Не устанавливаем courierId, так как курьер не создан
     }
 
     @Step("Создание курьера")
