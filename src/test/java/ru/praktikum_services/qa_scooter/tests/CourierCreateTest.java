@@ -70,6 +70,25 @@ public class CourierCreateTest {
         Response response = createCourier(courier);
         response.then().statusCode(400).body("message", not(empty()));
     }
+    @Test
+    @DisplayName("Создание курьера без пароля")
+    public void cannotCreateCourierWithoutPassword() {
+        Createuser courier = new Createuser();
+        courier.setLogin("noPassLogin123");
+        courier.setFirstName("Rediyss");
+
+        Response response = createCourier(courier);
+        response.then().statusCode(400).body("message", not(empty()));
+    }
+    @Test
+    @DisplayName("Создание курьера без firstName")
+    public void canCreateCourierWithoutFirstName() {
+        Createuser courier = new Createuser("noFirstNameLogin123", "1234", null);
+        lastCreatedCourier = courier;
+
+        Response response = createCourier(courier);
+        response.then().statusCode(201).body("ok", is(true));
+    }
 
     @Step("Создание курьера")
     private Response createCourier(Createuser courier) {
