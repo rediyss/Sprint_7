@@ -42,16 +42,17 @@ public class OrderCreateTest {
     @Test
     @DisplayName("Создание заказа с параметрами цвета")
     public void createOrderWithColors() {
-        Map<String, Object> order = new HashMap<>();
-        order.put("firstName", "Kek");
-        order.put("lastName", "Lol");
-        order.put("address", "Magadan, 142 apt.");
-        order.put("metroStation", 4);
-        order.put("phone", "+7 800 589 33 96");
-        order.put("rentTime", 5);
-        order.put("deliveryDate", "2025-06-09");
-        order.put("comment", "bebeb");
-        order.put("color", colors);
+        Order order = new Order(
+                "Kek",
+                "Lol",
+                "Magadan, 142 apt.",
+                4,
+                "+7 800 589 33 96",
+                5,
+                "2025-06-09",
+                "bebeb",
+                Arrays.asList(colors) // ← преобразуем массив в список
+        );
 
         Response response = orderClient.createOrder(order);
         int track = response.then()
