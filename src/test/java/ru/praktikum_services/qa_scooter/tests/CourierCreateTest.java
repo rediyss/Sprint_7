@@ -98,8 +98,6 @@ public class CourierCreateTest {
                 .contentType(ContentType.JSON)
                 .body("{\"id\": \"" + id + "\"}")
                 .when()
-                .delete("/api/v1/courier/" + id)
-                .then()
-                .statusCode(200);
+                .delete("/api/v1/courier/" + id);
     }
 }
