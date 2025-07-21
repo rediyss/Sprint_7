@@ -20,7 +20,7 @@ public class CourierLoginTest {
     public void setup() {
         RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
         // Создаем курьера перед тестами
-        Createuser courier = new Createuser("Artas9r", "1234", "Rediys");
+        CreateUser courier = new CreateUser("Artas9r", "1234", "Rediys");
         Response createResponse = createCourier(courier);
         createResponse.then().statusCode(201).body("ok", is(true));
     }
@@ -121,7 +121,7 @@ public class CourierLoginTest {
     }
 
     @Step("Создание курьера")
-    private Response createCourier(Createuser courier) {
+    private Response createCourier(CreateUser courier) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(courier)
