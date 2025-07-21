@@ -2,27 +2,25 @@ package ru.praktikum_services.qa_scooter.tests;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 import java.util.*;
-
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @RunWith(Parameterized.class)
 public class OrderCreateTest {
 
     private final String[] colors;
-    private final String testCaseDescription;
+    private final String name;
+    private OrderClient orderClient; // ← добавлено
 
-    public OrderCreateTest(String testCaseDescription, String[] colors) {
-        this.testCaseDescription = testCaseDescription;
+    public OrderCreateTest(String name, String[] colors) {
+        this.name = name;
         this.colors = colors;
+
     }
 
     @Parameterized.Parameters(name = "{0}")
@@ -38,6 +36,7 @@ public class OrderCreateTest {
     @Before
     public void setup() {
         RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
+        orderClient = new OrderClient(); // ← добавлено
     }
 
     @Test
@@ -53,13 +52,14 @@ public class OrderCreateTest {
         order.put("deliveryDate", "2025-06-09");
         order.put("comment", "bebeb");
         order.put("color", colors);
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(order)
-                .post("/api/v1/orders");
 
-        response.then().
-                statusCode(201)
-                .body("track", notNullValue());
+        Response response = orderClient.createOrder(order);
+        int track = response.then()
+                .statusCode(201)
+                .body("track", notNullValue())
+                .extract()
+                .path("track");
+
+        orderClient.cancelOrder(track);
     }
 }
