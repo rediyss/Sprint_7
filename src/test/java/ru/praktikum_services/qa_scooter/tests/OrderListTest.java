@@ -8,12 +8,7 @@ import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class OrderListTest {
-
-    @BeforeClass
-    public static void setup() {
-        RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
-    }
+public class OrderListTest extends BaseTest{
 
     @Test
     @DisplayName("Список заказов не пустой")

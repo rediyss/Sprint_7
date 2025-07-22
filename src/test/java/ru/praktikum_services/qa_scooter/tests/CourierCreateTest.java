@@ -14,18 +14,11 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 
-public class CourierCreateTest {
+public class CourierCreateTest extends BaseTest{
 
     protected RequestSpecification requestSpec;
     private String courierId;
     private CreateUser lastCreatedCourier;
-
-    @Before
-    public void setup() {
-        requestSpec = new RequestSpecBuilder()
-                .setBaseUri("https://qa-scooter.praktikum-services.ru")
-                .build();
-    }
 
     @After
     public void tearDown() {

@@ -13,13 +13,12 @@ import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class CourierLoginTest {
+public class CourierLoginTest extends BaseTest {
 
     private String courierId;
 
     @Before
     public void setup() {
-        RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
         // Создаем курьера перед тестами
         CreateUser courier = new CreateUser("Artas9r", "1234", "Rediys");
         Response createResponse = createCourier(courier);
