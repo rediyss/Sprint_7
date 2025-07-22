@@ -64,7 +64,7 @@ public class CourierCreateTest extends BaseTest{
         courier.setFirstName("Rediyss");
 
         Response response = createCourier(courier);
-        response.then().statusCode(400).body("message", not(empty()));
+        response.then().statusCode(400).body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class CourierCreateTest extends BaseTest{
         courier.setFirstName("Rediyss");
 
         Response response = createCourier(courier);
-        response.then().statusCode(400).body("message", not(empty()));
+        response.then().statusCode(400).body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @Test
