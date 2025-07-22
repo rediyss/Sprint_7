@@ -3,12 +3,9 @@ package ru.praktikum_services.qa_scooter.tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -16,7 +13,6 @@ import static org.hamcrest.Matchers.*;
 
 public class CourierCreateTest extends BaseTest{
 
-    protected RequestSpecification requestSpec;
     private String courierId;
     private CreateUser lastCreatedCourier;
 
