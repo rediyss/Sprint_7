@@ -2,8 +2,8 @@ package ru.praktikum_services.qa_scooter.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +14,11 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(Parameterized.class)
 public class OrderCreateTest extends BaseTest {
+
     private final String[] colors;
     private final String name;
-    private OrderClient orderClient; // ← добавлено
+    private OrderClient orderClient;
+    private int track;
 
     public OrderCreateTest(String name, String[] colors) {
         this.name = name;
@@ -36,6 +38,13 @@ public class OrderCreateTest extends BaseTest {
     @Before
     public void setup() {
         orderClient = new OrderClient();
+    }
+
+    @After
+    public void tearDown() {
+        if (track != 0) {
+            orderClient.cancelOrder(track);
+        }
     }
 
     @Test
@@ -60,7 +69,5 @@ public class OrderCreateTest extends BaseTest {
                 .body("track", notNullValue())
                 .extract()
                 .path("track");
-
-        orderClient.cancelOrder(track);
     }
 }
