@@ -20,7 +20,7 @@ public class CourierLoginTest extends BaseTest {
     @Before
     public void setup() {
         // Создаем курьера перед тестами
-        CreateUser courier = new CreateUser("Artas9r", "1234", "Rediys");
+        CreateUser courier = new CreateUser("Popkiller92409128490124", "1234", "Rediys");
         Response createResponse = createCourier(courier);
         createResponse.then().statusCode(201).body("ok", is(true));
     }
@@ -30,7 +30,7 @@ public class CourierLoginTest extends BaseTest {
         // Получаем ID курьера перед удалением, если он еще не был установлен
         if (courierId == null) {
             try {
-                courierId = getCourierId("Artas9r", "1234");
+                courierId = getCourierId("Popkiller92409128490124", "1234");
             } catch (Exception e) {
                 System.out.println("Не удалось получить ID курьера для удаления: " + e.getMessage());
                 return;
@@ -46,7 +46,7 @@ public class CourierLoginTest extends BaseTest {
     @DisplayName("Курьер может авторизоваться")
     @Description("Проверка, что курьер может авторизоваться с валидными логином и паролем")
     public void courierCanLoginTest() {
-        LoginCourier loginData = new LoginCourier("1234", "Artas9r");
+        LoginCourier loginData = new LoginCourier("1234", "Popkiller92409128490124");
 
         Response loginResponse = loginCourier(loginData);
         loginResponse.then()
@@ -72,7 +72,7 @@ public class CourierLoginTest extends BaseTest {
         @Description("Проверка, что авторизация без пароля невозможна. Ожидается код 400 и сообщение об ошибке.")
         public void passRequiresAllFieldsTest() {
         // Без пароля
-        LoginCourier withoutPassword = new LoginCourier(null, "Artas9r");
+        LoginCourier withoutPassword = new LoginCourier(null, "Popkiller92409128490124");
         loginCourier(withoutPassword)
                 .then()
                 .statusCode(400)
@@ -93,7 +93,7 @@ public class CourierLoginTest extends BaseTest {
         @DisplayName("Неверный пароль возвращает ошибку")
         @Description("Проверка, что при авторизации с неверным паролем возвращается код 404 и сообщение об ошибке.")
         public void wrongPasswordReturnsErrorTest() {
-        LoginCourier wrongPassword = new LoginCourier("wrongpass", "Artas9r");
+        LoginCourier wrongPassword = new LoginCourier("wrongpass", "Popkiller92409128490124");
         loginCourier(wrongPassword)
                 .then()
                 .statusCode(404)
@@ -115,7 +115,7 @@ public class CourierLoginTest extends BaseTest {
     @DisplayName("Успешная авторизация возвращает id курьера")
     @Description("Проверка, что успешная авторизация возвращает непустой id в теле ответа")
     public void successfulLoginReturnsIdTest() {
-        LoginCourier loginData = new LoginCourier("1234", "Artas9r");
+        LoginCourier loginData = new LoginCourier("1234", "Popkiller92409128490124");
 
         Response loginResponse = loginCourier(loginData);
         loginResponse.then()
